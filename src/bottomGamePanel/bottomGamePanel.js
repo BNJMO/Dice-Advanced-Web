@@ -362,11 +362,16 @@ export function createBottomGamePanel({
           return;
         }
 
-        const separator = document.createElement("span");
-        separator.className = "game-panel-separator";
-        separator.textContent = "&";
-        valueWrapper.appendChild(separator);
+        // For between mode: add separator only at positions 0 and 2 (keep outer &, remove center)
+        // For normal mode (inside/outside): add separator between the two inputs
+        if (mode !== "between" || positionIndex !== 1) {
+          const separator = document.createElement("span");
+          separator.className = "game-panel-separator";
+          separator.textContent = "&";
+          valueWrapper.appendChild(separator);
+        }
 
+        // Add spacer between the two pairs in between mode
         if (mode === "between" && positionIndex === 1) {
           const spacer = document.createElement("span");
           spacer.className = "game-panel-spacer";
@@ -452,11 +457,13 @@ export function createBottomGamePanel({
     const mode = sliderUi.getRollMode?.() ?? "inside";
     const rangeBoxCount = mode === "between" ? 4 : 2;
     const panelBoxCount = rangeBoxCount + 2;
+    // Separator count: between mode has 2 separators (outer &), normal mode has 1
+    const separatorCount = mode === "between" ? 2 : 1;
     panel.style.setProperty("--range-box-count", String(rangeBoxCount));
     panel.style.setProperty("--panel-box-count", String(panelBoxCount));
-    panel.style.setProperty("--range-separator-count", String(rangeBoxCount - 1));
+    panel.style.setProperty("--range-separator-count", String(separatorCount));
     panel.style.setProperty("--range-separator-width", "14px");
-    panel.style.setProperty("--range-spacer-width", mode === "between" ? "16px" : "0px");
+    panel.style.setProperty("--range-spacer-width", mode === "between" ? "8px" : "0px");
   }
 
   function layout() {

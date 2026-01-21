@@ -4,7 +4,7 @@
   transform-origin: bottom center;
   display: flex;
   flex-wrap: nowrap;
-  gap: 16px;
+  gap: 10px;
   justify-content: center;
   padding: 16px 20px 24px;
   width: calc(100% - 30px);
@@ -200,56 +200,66 @@ button.game-panel-value:focus-visible {
   --game-panel-icon-height: 13px;
 }
 
-@media (max-width: 768px), (orientation: portrait) {
+/* Portrait mode: Multiplier + WinChance on row 1, Range on row 2 */
+@media (orientation: portrait) {
   .game-bottom-panel {
-    gap: 12px;
+    gap: 8px;
     padding: 22px 14px;
     bottom: 14px;
     flex-wrap: wrap;
-    row-gap: 12px;
+    row-gap: 10px;
   }
 
   .game-panel-item--multiplier {
     order: 1;
-    flex: 1 1 45%;
+    flex: 1 1 calc((100% - 8px) / 2);
   }
 
   .game-panel-item--win-chance {
     order: 2;
-    flex: 1 1 45%;
+    flex: 1 1 calc((100% - 8px) / 2);
   }
 
   .game-panel-item--range {
     order: 3;
     flex: 1 1 100%;
   }
+
+  /* Keep all range inputs on one line in portrait */
+  .game-panel-range-row {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+
+  .game-panel-value.game-panel-range-value {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .game-panel-spacer {
+    flex: 0 0 var(--range-spacer-width);
+  }
 }
 
-@media (min-width: 854px) {
+/* Landscape mode: All boxes in single row with uniform width */
+@media (orientation: landscape) {
   .game-bottom-panel {
-    --panel-gap: 16px;
+    --panel-gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .game-panel-item {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .game-panel-item--multiplier,
   .game-panel-item--win-chance {
-    flex: 0 0
-      calc(
-        (100% - (var(--panel-box-count) - 1) * var(--panel-gap) -
-              (var(--range-separator-count) * var(--range-separator-width)) -
-              var(--range-spacer-width)) / var(--panel-box-count)
-      );
+    flex: 0.8 1 0;
   }
 
   .game-panel-item--range {
-    flex: 0 0
-      calc(
-        ((100% - (var(--panel-box-count) - 1) * var(--panel-gap) -
-          (var(--range-separator-count) * var(--range-separator-width)) -
-          var(--range-spacer-width)) / var(--panel-box-count)) *
-          var(--range-box-count) +
-          (var(--range-separator-count) * var(--range-separator-width)) +
-          var(--range-spacer-width)
-      );
+    flex: 1.4 1 0;
   }
 
   .game-panel-value {
