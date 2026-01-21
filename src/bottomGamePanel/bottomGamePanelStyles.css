@@ -268,7 +268,7 @@ button.game-panel-value:focus-visible {
 
   .game-panel-range-row {
     flex-wrap: nowrap;
-    gap: 0;
+    gap: 4px;
   }
 
   .game-panel-value.game-panel-range-value {
