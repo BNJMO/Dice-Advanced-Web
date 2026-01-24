@@ -36,6 +36,9 @@
   min-height: 0;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  overscroll-behavior: contain;        
+  -webkit-overflow-scrolling: touch;    
+  
 }
 
 .control-panel-scroll::-webkit-scrollbar {
@@ -841,4 +844,9 @@
     margin-top: 8px;
     order: 99;
   }
+}
+.control-bet-btn,
+#betBtn.control-bet-btn {
+  touch-action: manipulation;           
+  -webkit-tap-highlight-color: transparent;
 }

@@ -22,6 +22,7 @@
   --range-separator-count: 1;
   --range-separator-width: 14px;
   --range-spacer-width: 0px;
+  touch-action: manipulation;
 }
 
 .game-panel-item {
@@ -281,3 +282,17 @@ button.game-panel-value:focus-visible {
   }
 }
 
+@supports (-webkit-touch-callout: none) {
+  .game-panel-input,
+  .game-panel-display {
+    font-size: 16px !important;
+    transform: scale(0.9);
+    transform-origin: left center;
+  }
+}
+
+.game-bottom-panel,
+.game-bottom-panel * {
+
+   -webkit-tap-highlight-color: transparent;
+}
