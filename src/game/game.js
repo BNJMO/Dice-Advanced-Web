@@ -562,6 +562,22 @@ export async function createGame(mount, opts = {}) {
 
     root.innerHTML = "";
     root.appendChild(app.canvas);
+
+    const canvas = app.canvas;
+
+    canvas.style.touchAction = "none";
+    canvas.style.webkitUserSelect = "none";
+    canvas.style.userSelect = "none";
+    canvas.style.webkitTapHighlightColor = "transparent";
+
+    const prevent = (e) => {
+      if (e.cancelable) e.preventDefault();
+    };
+
+    canvas.addEventListener("touchstart", prevent, { passive: false });
+    canvas.addEventListener("touchmove", prevent, { passive: false });
+    canvas.addEventListener("touchend", prevent, { passive: false });
+
   } catch (e) {
     console.error("PIXI init failed", e);
     throw e;

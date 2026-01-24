@@ -715,6 +715,27 @@ export class ControlPanel extends EventTarget {
     this.betButton.type = "button";
     this.betButton.id = "betBtn";
     this.betButton.className = "control-bet-btn";
+
+     const blurActiveInput = () => {
+      const el = document.activeElement;
+      if (!el) return;
+      const tag = el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+        el.blur();
+      }
+    };
+
+     const preventTouchDefault = (e) => {
+      if (e.cancelable) e.preventDefault();
+    };
+
+  // this.betButton.addEventListener("touchstart", preventTouchDefault, { passive: false });
+  // this.betButton.addEventListener("touchend", preventTouchDefault, { passive: false });
+
+  this.betButton.addEventListener("pointerdown", () => {
+    blurActiveInput();
+  });
+
     this.betButton.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("bet"));
     });

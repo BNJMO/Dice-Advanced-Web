@@ -48,6 +48,15 @@ export function createBottomGamePanel({
     return false;
   }
 
+  function blurActiveInput() {
+  const el = document.activeElement;
+  if (!el) return;
+  const tag = el.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+    el.blur();
+  }
+}
+
   function formatPanelValue(value, defaultFormatter, fallback = "") {
     if (!Number.isFinite(value)) {
       return fallback;
@@ -120,6 +129,7 @@ export function createBottomGamePanel({
       upAriaLabel: `Increase ${label}`,
       downAriaLabel: `Decrease ${label}`,
       onStepUp: () => {
+        blurActiveInput();
         const current = Number(getValue());
         const next = Number.isFinite(current) ? current + step : step;
         onCommit(next);
@@ -127,6 +137,7 @@ export function createBottomGamePanel({
         refresh(true);
       },
       onStepDown: () => {
+        blurActiveInput();
         const current = Number(getValue());
         const next = Number.isFinite(current) ? current - step : 0;
         onCommit(next);
@@ -226,7 +237,9 @@ export function createBottomGamePanel({
       }
     });
 
-    valueWrapper.addEventListener("click", () => input.focus());
+    valueWrapper.addEventListener("click", () => {
+  if (document.activeElement !== input) input.focus();
+});
 
     function setClickable(isClickable) {
       const clickable = Boolean(isClickable);
